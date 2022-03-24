@@ -1,2 +1,2 @@
-# OOSE-project
+# Cosmetic Store Management System
 hello 
