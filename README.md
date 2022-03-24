@@ -6,7 +6,7 @@ This project is an endeavor to provide a solution to this. The proposed system e
 FA20-BSE-042 muhammad talah<br>
 FA20-BSE-047 Osama khan<br>
 FA20-BSE-054 <br>
-FA20-BSE-055 <br>
-FA20-BSE-056 <br>
+FA20-BSE-055 Umama Noor<br>
+FA20-BSE-056 Ume Laila<br>
 FA20-BSE-069 Farhan khan (Group leader)<br>
 FA20-BSE-071 Muhammad bilal<br>
