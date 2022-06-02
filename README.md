@@ -9,4 +9,4 @@ FA20-BSE-054 Sabahat siddique<br>
 FA20-BSE-055 Umama Noor<br>
 FA20-BSE-049 Muhammad Sultan Sheraz<br>
 FA20-BSE-069 Farhan khan <br>
-FA20-BSE-071 Muhammad bilal (Group leader) <br>
+FA20-BSE-071 Muhammad bilal  <br>
