@@ -85,6 +85,7 @@ public final class AddStock extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         prices = new javax.swing.JLabel();
         quantity = new javax.swing.JTextField();
+        deleteNow = new javax.swing.JTextField();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -198,7 +199,9 @@ public final class AddStock extends javax.swing.JFrame {
                     .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(quantity, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(itemName, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(109, 109, 109))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(deleteNow, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
@@ -210,11 +213,10 @@ public final class AddStock extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addGap(133, 133, 133)
                                     .addComponent(jLabel1))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4))))
+                                .addComponent(jLabel3)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4)))
                             .addGap(148, 148, 148))
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -233,7 +235,8 @@ public final class AddStock extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(deleteNow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(131, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -285,9 +288,72 @@ public final class AddStock extends javax.swing.JFrame {
     }//GEN-LAST:event_priceActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-itemName.setText("");
-quantity.setText("");
-price.setText("");
+                                        
+
+String dbURL;
+        dbURL = "jdbc:mysql://localhost:3306/farhandb1";
+       
+Connection conn;
+            try {
+                conn = DriverManager.getConnection(dbURL,"root","pakistan789@");
+                if (conn != null) {
+    System.out.println("Connected");
+          //Creating a Statement object
+      Statement stmt = conn.createStatement();
+      //Setting auto-commit false
+      conn.setAutoCommit(false);
+     
+      String ids = String.valueOf(deleteNow.getText());
+      var names = String.valueOf(itemName.getText());
+      var qty =String.valueOf(quantity.getText());
+      var RS = String.valueOf(price.getText());
+      
+
+      String insert1 = "DELETE FROM addstock WHERE StockId="+ids+"";
+      stmt.addBatch(insert1);
+      stmt.executeBatch();
+      
+       Statement rsstmt = conn.createStatement();
+       
+
+      String QUERY="SELECT * FROM addstock";
+      ResultSet rs = rsstmt.executeQuery(QUERY);
+      //Statements to insert records
+
+
+    DefaultTableModel model = (DefaultTableModel) stockTable.getModel();
+    model.setRowCount(0);
+
+      while(rs.next()){
+            //Display values
+              System.out.print("id: " + rs.getInt(1));
+                System.out.print(", item name: " + rs.getString(2));
+                System.out.print(", qty: " + rs.getString(3));
+                System.out.print(", price: " + rs.getString(4));
+                Object[] row2 = {
+                    rs.getInt(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    rs.getString(4)
+                
+     
+                };
+
+    
+    model.addRow(row2);
+ 
+         }
+      conn.commit();
+      
+      System.out.println("Records inserted......");
+    
+    
+               conn.close();
+
+}
+            } catch (SQLException ex) {
+                Logger.getLogger(AddStock.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
 
 
@@ -331,6 +397,7 @@ price.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField deleteNow;
     private javax.swing.JTextField itemName;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
